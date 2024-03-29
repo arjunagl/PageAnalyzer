@@ -14,7 +14,7 @@ Run `go mod tidy` forllowed by `make run`.  This will lauch the application on p
 ### Intepretting the results
 The result comes in json format.  Given below are the json fields and a description of each field
 
-```
+``` JSON
 {
   // overall result
   "result": {
