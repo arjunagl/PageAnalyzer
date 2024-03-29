@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestVersionAnalyzeService_AnalyzeContent corrected for nil interface issue
 func TestVersionAnalyzeService_AnalyzeContent(t *testing.T) {
 	tests := []struct {
 		name           string
@@ -47,12 +46,10 @@ func TestVersionAnalyzeService_AnalyzeContent(t *testing.T) {
 			mockContentReader.On("Html").Return(tc.sourceContent).Once()
 			service := VersionAnalyzeService{}
 
-			// Execute test
 			result, err := service.AnalyzeContent(mockContentReader)
 			assert.NoError(t, err)
 			assert.Equal(t, tc.expectedResult, result)
 
-			// Verify expectations
 			mockContentReader.AssertExpectations(t)
 		})
 	}

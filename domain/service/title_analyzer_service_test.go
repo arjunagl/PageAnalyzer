@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TestTitleAnalyzeService_AnalyzeContent tests the AnalyzeContent function of TitleAnalyzeService using a table-driven approach
 func TestTitleAnalyzeService_AnalyzeContent(t *testing.T) {
 	tests := []struct {
 		name        string
@@ -35,18 +34,15 @@ func TestTitleAnalyzeService_AnalyzeContent(t *testing.T) {
 			mockContentReader := new(MockContentReader)
 			service := TitleAnalyzeService{}
 
-			// Setup mock expectations based on the test case
-			firstMock := new(MockContentReader) // Simulate the result of First()
+			firstMock := new(MockContentReader)
 			mockContentReader.On("Find", "title").Return(mockContentReader)
 			mockContentReader.On("First").Return(firstMock)
 			firstMock.On("Text").Return(tc.titleText)
 
-			// Execute test
 			result, err := service.AnalyzeContent(mockContentReader)
 			assert.NoError(t, err)
 			assert.Equal(t, tc.expectTitle, result)
 
-			// Verify expectations
 			mockContentReader.AssertExpectations(t)
 			firstMock.AssertExpectations(t)
 		})

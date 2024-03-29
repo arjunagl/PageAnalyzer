@@ -65,7 +65,6 @@ func TestLinkAnalyzeService_AnalyzeContent(t *testing.T) {
 			mockContentDownloader := new(MockContentDownloader)
 			service := NewLinkAnalyzeService(mockContentDownloader)
 
-			// Setup mock expectations for each href value
 			mockContentReader.On("Find", "a").Return(mockContentReader).Once()
 			mockContentReader.On("Each", mock.Anything).Return(tc.hrefValues).Once()
 
@@ -73,14 +72,12 @@ func TestLinkAnalyzeService_AnalyzeContent(t *testing.T) {
 				mockContentDownloader.On("IsLinkAccessible", href).Return(accessible)
 			}
 
-			// Execute test
 			result, err := service.AnalyzeContent(mockContentReader)
 			assert.NoError(t, err)
 			analysisResult, ok := result.(LinkAnalysis)
 			assert.True(t, ok)
 			assert.Equal(t, tc.expectedAnalysis, analysisResult)
 
-			// Verify expectations
 			mockContentReader.AssertExpectations(t)
 			mockContentDownloader.AssertExpectations(t)
 		})

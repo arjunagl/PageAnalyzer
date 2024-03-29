@@ -30,7 +30,6 @@ func (ta *LinkAnalyzeService) AnalyzeContent(cr port.ContentReader) (interface{}
 
 		if strings.HasPrefix(href, "http") {
 			analysis.ExternalLinks++
-			// Check accessibility for external links
 			if !ta.cd.IsLinkAccessible(href) {
 				analysis.InaccessibleLinks = append(analysis.InaccessibleLinks, href)
 			}
@@ -40,5 +39,4 @@ func (ta *LinkAnalyzeService) AnalyzeContent(cr port.ContentReader) (interface{}
 	})
 
 	return analysis, nil
-
 }

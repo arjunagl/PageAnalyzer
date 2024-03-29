@@ -120,7 +120,6 @@ func TestAnalyze(t *testing.T) {
 				log.Fatalf("Error unmarshalling JSON: %v", err)
 			}
 			assert.Equal(t, expectedResult, analysisResult)
-
 		})
 	}
 }

@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-// MockContentReader mocks the ContentReader interface
 type MockContentReader struct {
 	mock.Mock
 }
@@ -31,14 +30,12 @@ func (m *MockContentReader) First() port.ContentReader {
 
 func (m *MockContentReader) Each(f func(index int, elem port.ContentReader)) {
 	args := m.Called(f)
-	hrefValues := args.Get(0).([]string) // Expect a slice of href values to be passed
+	hrefValues := args.Get(0).([]string)
 
 	for i, href := range hrefValues {
-		// Create a new mock for each href and setup Attr
 		elemMock := new(MockContentReader)
 		elemMock.On("Attr", "href").Return(href, true).Once()
 
-		// Call the callback function with the mock
 		f(i, elemMock)
 	}
 }

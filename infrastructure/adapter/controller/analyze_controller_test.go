@@ -25,7 +25,6 @@ func newMockedAnalyzeController() *AnalyzeController {
 }
 
 func TestAnalyzeSubmit(t *testing.T) {
-	// controller := newMockedAnalyzeController()
 	var controller *AnalyzeController
 
 	tests := []struct {
@@ -91,7 +90,6 @@ func TestAnalyzeSubmit(t *testing.T) {
 				uuidRegex := regexp.MustCompile(`[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}`)
 				assert.True(t, uuidRegex.MatchString(responseBody), "Expected response body to be a valid UUID")
 				controller.app.SchedulerService.(*service.MockSchedulerService).AssertExpectations(t)
-				// controller.app.SchedulerService.AssertExpectations(t)
 			}
 		})
 	}
@@ -101,7 +99,6 @@ func TestAnalyzeSubmit(t *testing.T) {
 func TestAnalyzeGetResults(t *testing.T) {
 	controller := newMockedAnalyzeController()
 	mockSchedulerService := controller.app.SchedulerService.(*service.MockSchedulerService)
-	// mockContentDownloader := controller.app.ContentDownloader.(*service.MockContentDownloader)
 
 	tests := []struct {
 		name           string

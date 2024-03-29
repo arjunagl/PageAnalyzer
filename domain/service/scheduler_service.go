@@ -34,12 +34,10 @@ func (s *SchedulerService) Analyze(id string, source string) {
 }
 
 func (s *SchedulerService) runAnalysis(id string, source string) {
-	// Perform the analysis. Assuming AnalyzeContent now doesn't return anything and modifies internal state.
 	r, err := s.analyzerService.AnalyzeContent(source)
 	s.mu.Lock()
 	if result, exists := s.results[id]; exists {
-		// Assume we retrieve the result from the analyzer service directly.
-		result.Result = r // This line may need to be adjusted based on actual implementation.
+		result.Result = r
 		if err != nil {
 			result.Status = model.StatusError
 		} else {

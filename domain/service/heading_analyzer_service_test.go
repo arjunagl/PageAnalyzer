@@ -8,7 +8,6 @@ import (
 )
 
 func TestHeadingAnalyzeService_AnalyzeContent(t *testing.T) {
-	// Define test cases
 	tests := []struct {
 		name           string
 		setupMock      func(m *MockContentReader)

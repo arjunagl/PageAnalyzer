@@ -38,7 +38,6 @@ func (h *AnalyzeController) Analyze(w http.ResponseWriter, r *http.Request) {
 	h.app.SchedulerService.Analyze(id, analyzeReq.SiteURL)
 }
 
-// Handler for GET requests (assuming you have a similar mechanism for GET)
 func (h *AnalyzeController) GetResults(w http.ResponseWriter, r *http.Request) {
 	requestID := strings.TrimSpace(r.URL.Query().Get("request_id"))
 	if requestID == "" {
@@ -55,7 +54,6 @@ func (h *AnalyzeController) GetResults(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	// Encode data to JSON and write to response
 	if err := json.NewEncoder(w).Encode(result); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

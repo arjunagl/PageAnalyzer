@@ -9,7 +9,7 @@ import (
 func TestLoginAnalyzeService_AnalyzeContent(t *testing.T) {
 	tests := []struct {
 		name           string
-		passwordInputs int // Number of password input fields to simulate
+		passwordInputs int
 		expectedResult bool
 	}{
 		{
