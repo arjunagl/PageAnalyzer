@@ -1,11 +1,15 @@
 # Html Analyzer
 
+- [Running the App](#running-the-app)
 - [Design Decisions](#design-decisions)
 - [Build and Deployment](#build-and-deployment)
 - [Areas Of Improvement](#areas-of-improvement)
 - [Unit and Integration Tests](#unit-and-integration-tests)
 - [Curl Commands](#curl-requests)
 - [Makefile Commands](#make-commands)
+
+## Running the App
+Run `go mod tidy` forllowed by `make run`.  This will lauch the application on port 80 and can be accessed with [http://localhost:80](http://localhost:80) which contains the user interface.
 
 ## Design Decisions
 
