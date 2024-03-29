@@ -174,23 +174,3 @@ func TestAnalyzeContent(t *testing.T) {
 		})
 	}
 }
-
-func TestPeople(t *testing.T) {
-	type Person struct {
-		Name    string
-		Address string
-	}
-	peopleMap := map[string]*Person{
-		"person1": &Person{Name: "John Doe", Address: "123 Main St"},
-		"person2": &Person{Name: "Jane Doe", Address: "456 Elm St"},
-		// Add more entries as needed
-	}
-
-	peopleMap2 := map[string]*Person{
-		"person2": &Person{Name: "Jane Doe", Address: "456 Elm St"},
-		"person1": &Person{Name: "John Doe", Address: "123 Main St"},
-		// Add more entries as needed
-	}
-
-	assert.Equal(t, peopleMap, peopleMap2)
-}

@@ -6,8 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// MockContentReader is already defined in the previous example
-
 // TestTitleAnalyzeService_AnalyzeContent tests the AnalyzeContent function of TitleAnalyzeService using a table-driven approach
 func TestTitleAnalyzeService_AnalyzeContent(t *testing.T) {
 	tests := []struct {
