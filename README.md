@@ -51,7 +51,7 @@ The created image can be deployed on any environment which supports containers f
 
 You can use the `run-docker` make command to run the docker image on your local box.
 
-### Areas Of Improvement
+## Areas Of Improvement
 
 1. Worker pool: Currently the app uses a go-routines to start off the analysis process. This can be scaled out even more by using worker pools that communicate through channels.
 
