@@ -11,6 +11,40 @@
 ## Running the App
 Run `go mod tidy` forllowed by `make run`.  This will lauch the application on port 80 and can be accessed with [http://localhost:80](http://localhost:80) which contains the user interface.
 
+### Intepretting the results
+The result comes in json format.  Given below are the json fields and a description of each field
+
+```
+{
+  // overall result
+  "result": {
+    // result after analyzing the headings, contains the headings level and the number of headings at each level
+    "Heading": {
+      "result": { "h1": 0, "h2": 0, "h3": 0, "h4": 0, "h5": 0, "h6": 0 }
+    },
+    // result of analyzing the links
+    "Link": {
+      "result": {
+        // number of internal links
+        "InternalLinks": 6, 
+        // number of external links
+        "ExternalLinks": 13,
+        // number of inaccessible links
+        "InaccessibleLinks": null
+      }
+    },
+    // indicates if a login form is available on the page
+    "Login": { "result": false },
+    // title of the page
+    "Title": { "result": "Google" },
+    // html version
+    "Version": { "result": "HTML5" }
+  },
+  // overall status of the analysis
+  "status": "Complete"
+}
+```
+
 ## Design Decisions
 
 ### Architecture
