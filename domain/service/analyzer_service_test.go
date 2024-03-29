@@ -5,7 +5,6 @@ import (
 	"arjunagl/htmlAnalyzer/domain/port"
 	"fmt"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -28,7 +27,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "successful analysis",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil).Once()
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -37,16 +36,24 @@ func TestAnalyzeContent(t *testing.T) {
 				return dl
 			},
 			prepareItemAnalyzers: func() []*ItemAnalyzeService {
-				m1 := &MockItemAnalyzerService{}
-				m1.On("AnalyzeContent", mock.Anything).Return("Hello World", nil).Once() // title
-				m1.On("AnalyzeContent", mock.Anything).Return("HTML5", nil).Once()       // version
-				m1.On("AnalyzeContent", mock.Anything).Return(false, nil).Once()         // login
-				m1.On("AnalyzeContent", mock.Anything).Return(map[string]interface{}{
+				tm := &MockItemAnalyzerService{}
+				tm.On("AnalyzeContent", mock.Anything).Return("Hello World", nil).Once() // title
+
+				vm := &MockItemAnalyzerService{}
+				vm.On("AnalyzeContent", mock.Anything).Return("HTML5", nil).Once() // version
+
+				lm := &MockItemAnalyzerService{}
+				lm.On("AnalyzeContent", mock.Anything).Return(false, nil).Once() // login
+
+				lkm := &MockItemAnalyzerService{}
+				lkm.On("AnalyzeContent", mock.Anything).Return(map[string]interface{}{
 					"InternalLinks":     6,
 					"ExternalLinks":     13,
 					"InaccessibleLinks": nil,
 				}, nil).Once() // link
-				m1.On("AnalyzeContent", mock.Anything).Return(map[string]interface{}{
+
+				hm := &MockItemAnalyzerService{}
+				hm.On("AnalyzeContent", mock.Anything).Return(map[string]interface{}{
 					"h1": 1,
 					"h2": 2,
 					"h3": 3,
@@ -56,11 +63,11 @@ func TestAnalyzeContent(t *testing.T) {
 				}, nil).Once() // heading
 
 				return []*ItemAnalyzeService{
-					{Title: "Title", ContentAnalyzer: m1},
-					{Title: "Version", ContentAnalyzer: m1},
-					{Title: "Login", ContentAnalyzer: m1},
-					{Title: "Link", ContentAnalyzer: m1},
-					{Title: "Heading", ContentAnalyzer: m1},
+					{Title: "Title", ContentAnalyzer: tm},
+					{Title: "Version", ContentAnalyzer: vm},
+					{Title: "Login", ContentAnalyzer: lm},
+					{Title: "Link", ContentAnalyzer: lkm},
+					{Title: "Heading", ContentAnalyzer: hm},
 				}
 			},
 			expectedResults: ExpectedResults{
@@ -89,7 +96,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "failure to download content",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil).Once()
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -114,7 +121,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "should run successfully without any analyzers",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil).Once()
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -134,7 +141,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "should capture errors correctly to download content",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil).Once()
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -169,7 +176,6 @@ func TestAnalyzeContent(t *testing.T) {
 			service := NewAnalyzerService(tc.prepareItemAnalyzers(), reader, downloader)
 
 			r, err := service.AnalyzeContent("source")
-			time.Sleep(3 * time.Second)
 
 			assert.Equal(t, tc.expectedResults.result, r)
 			assert.Equal(t, tc.expectedResults.err, err)
