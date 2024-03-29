@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    width: 75%; /* Set the width of the form container to 75% of its parent */
+    max-width: 800px; /* Optional: You can set a max-width to prevent the form from becoming too wide on large screens */
+    margin: auto; /* This centers the form container horizontally */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form#urlForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input[type="url"], input[type="text"], textarea, .btn {
+    width: 100%; /* Make input fields and buttons expand to fill the container */
+    padding: 10px;
+    margin: 5px 0; /* Add some margin for better spacing */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn {
+    cursor: pointer;
+    color: white;
+    background-color: #007bff;
+    border: none;
+}
+
+.update-btn {
+    background-color: #28a745;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+textarea#resultArea {
+    height: 150px; /* Set a fixed height for the textarea */
+    resize: vertical; /* Allow the user to vertically resize the textarea */
+}

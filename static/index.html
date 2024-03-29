@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webpage Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="form-container">
+      <form id="urlForm">
+        <input
+          type="url"
+          id="webpageUrl"
+          name="webpageUrl"
+          placeholder="Enter webpage URL"
+          required
+        />
+        <button type="submit" class="btn submit-btn">Analyze URL</button>
+        <input
+          type="text"
+          id="guid"
+          name="guid"
+          placeholder="GUID will appear here"
+        />
+        <button type="button" class="btn update-btn">Get Update</button>
+      </form>
+
+      <textarea
+        id="resultArea"
+        placeholder="Results will appear here"
+        readonly
+      ></textarea>
+    </div>
+
+    <script>
+      document
+        .getElementById("urlForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the form from submitting the traditional way
+
+          var url = document.getElementById("webpageUrl").value;
+          var data = {
+            site_url: url,
+          };
+
+          // Convert the JavaScript object to a JSON string
+          var jsonData = JSON.stringify(data);
+
+          // Create and send an XMLHttpRequest
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "/analyze", true);
+          xhr.setRequestHeader("Content-Type", "application/json");
+
+          xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              var guid = xhr.responseText;
+              document.getElementById("guid").value = guid;
+              console.log("Success:", xhr.responseText);
+            } else {
+              // Handle error
+              var message = xhr.responseText;
+              document.getElementById("resultArea").value = message;
+              console.error("Error:", xhr.statusText);
+            }
+          };
+
+          xhr.onerror = function () {
+            // Handle network errors
+            console.error("Network Error");
+          };
+
+          xhr.send(jsonData); // Send the JSON data
+        });
+
+      document
+        .querySelector(".update-btn")
+        .addEventListener("click", function () {
+          var guid = document.getElementById("guid").value;
+          if (!guid) {
+            alert("GUID is required.");
+            return;
+          }
+
+          var xhr = new XMLHttpRequest();
+          xhr.open(
+            "GET",
+            `/analyze?request_id=${encodeURIComponent(guid)}`,
+            true
+          );
+
+          xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              document.getElementById("resultArea").value = xhr.responseText;
+            } else {
+              console.error("Error fetching update:", xhr.statusText);
+            }
+          };
+
+          xhr.onerror = function () {
+            console.error("Network Error on update fetch");
+          };
+
+          xhr.send();
+        });
+    </script>
+  </body>
+</html>

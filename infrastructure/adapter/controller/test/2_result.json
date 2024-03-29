@@ -1,0 +1,18 @@
+{
+  "result": {
+    "Heading": {
+      "result": { "h1": 2, "h2": 2, "h3": 2, "h4": 2, "h5": 2, "h6": 2 }
+    },
+    "Link": {
+      "result": {
+        "InternalLinks": 2,
+        "ExternalLinks": 3,
+        "InaccessibleLinks": null
+      }
+    },
+    "Login": { "result": true },
+    "Title": { "result": "Simple HTML Page" },
+    "Version": { "result": "HTML5" }
+  },
+  "status": "Complete"
+}

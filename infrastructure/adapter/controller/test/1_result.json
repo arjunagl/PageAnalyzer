@@ -1,0 +1,21 @@
+{
+  "result": {
+    "Heading": {
+      "result": { "h1": 0, "h2": 0, "h3": 0, "h4": 0, "h5": 0, "h6": 0 }
+    },
+    "Link": {
+      "result": {
+        "InternalLinks": 0,
+        "ExternalLinks": 0,
+        "InaccessibleLinks": null
+      }
+    },
+    "Login": { "result": false },
+    "Title": { "result": "Hello World" },
+    "Version": { "result": "Unknown" }
+  },
+  "status": "Complete"
+}
+
+
+
