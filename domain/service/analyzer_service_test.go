@@ -5,6 +5,7 @@ import (
 	"arjunagl/htmlAnalyzer/domain/port"
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -27,7 +28,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "successful analysis",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil).Once()
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -88,7 +89,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "failure to download content",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil).Once()
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -113,7 +114,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "should run successfully without any analyzers",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil).Once()
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -133,7 +134,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "should capture errors correctly to download content",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil).Once()
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -168,6 +169,7 @@ func TestAnalyzeContent(t *testing.T) {
 			service := NewAnalyzerService(tc.prepareItemAnalyzers(), reader, downloader)
 
 			r, err := service.AnalyzeContent("source")
+			time.Sleep(3 * time.Second)
 
 			assert.Equal(t, tc.expectedResults.result, r)
 			assert.Equal(t, tc.expectedResults.err, err)

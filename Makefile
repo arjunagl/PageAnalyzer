@@ -13,7 +13,7 @@ fmt:
 	go fmt
 
 test:
-	go test -v ./... -cover
+	go test -v ./... -cover 
 
 build:
 	docker build -t $(IMAGE_NAME):$(VERSION) .
