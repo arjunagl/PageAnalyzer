@@ -16,4 +16,6 @@ type ContentReader interface {
 	Attr(attr string) (string, bool)
 
 	Html() string
+
+	SourceURL() string
 }

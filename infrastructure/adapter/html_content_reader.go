@@ -10,6 +10,7 @@ import (
 
 type GoqueryAdapter struct {
 	sourceContent string
+	sourceURL     string
 	selection     *goquery.Selection
 }
 
@@ -18,6 +19,7 @@ func NewGoqueryAdapter() port.ContentReader {
 }
 
 func (g *GoqueryAdapter) LoadContentFromSource(source string) error {
+	g.sourceURL = source
 	g.sourceContent = source
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(source))
 	if err != nil {
@@ -55,4 +57,8 @@ func (g *GoqueryAdapter) Attr(attr string) (string, bool) {
 
 func (g *GoqueryAdapter) Html() string {
 	return g.sourceContent
+}
+
+func (g *GoqueryAdapter) SourceURL() string {
+	return g.sourceURL
 }

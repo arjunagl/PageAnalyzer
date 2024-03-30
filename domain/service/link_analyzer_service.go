@@ -2,6 +2,7 @@ package service
 
 import (
 	"arjunagl/htmlAnalyzer/domain/port"
+	"fmt"
 	"strings"
 )
 
@@ -26,6 +27,11 @@ func (ta *LinkAnalyzeService) AnalyzeContent(cr port.ContentReader) (interface{}
 		href, exists := s.Attr("href")
 		if !exists || href == "" || strings.HasPrefix(href, "#") {
 			return // Ignore anchors or empty hrefs
+		}
+
+		// append the sourceURL if its an internal link
+		if strings.HasPrefix(href, "//") {
+			href = fmt.Sprintf("%s%s", cr.SourceURL(), href)
 		}
 
 		if strings.HasPrefix(href, "http") {

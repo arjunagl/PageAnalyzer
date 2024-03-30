@@ -52,14 +52,12 @@ func TestAnalyze(t *testing.T) {
 	var controller *AnalyzeController
 	tests := []struct {
 		name           string
-		testID         string
 		expectedCode   int
 		expectedResult string
 		mockSetup      func()
 	}{
 		{
 			name:           "Plain html",
-			testID:         "1",
 			expectedCode:   http.StatusOK,
 			expectedResult: ReadTestContent("1_result.json"),
 			mockSetup: func() {
@@ -71,7 +69,6 @@ func TestAnalyze(t *testing.T) {
 		},
 		{
 			name:           "All elements inside",
-			testID:         "2",
 			expectedCode:   http.StatusOK,
 			expectedResult: ReadTestContent("2_result.json"),
 			mockSetup: func() {
@@ -79,6 +76,17 @@ func TestAnalyze(t *testing.T) {
 				mockContentDownloader := controller.app.ContentDownloader.(*service.MockContentDownloader)
 				mockContentDownloader.On("IsLinkAccessible", mock.AnythingOfType("string")).Return(true)
 				mockContentDownloader.On("DownloadContent", mock.AnythingOfType("string")).Return(ReadTestContent("2_html.html"), nil).Once()
+			},
+		},
+		{
+			name:           "Actual go site",
+			expectedCode:   http.StatusOK,
+			expectedResult: ReadTestContent("go_site_result.json"),
+			mockSetup: func() {
+				controller = newIntegratedMockedAnalyzeController()
+				mockContentDownloader := controller.app.ContentDownloader.(*service.MockContentDownloader)
+				mockContentDownloader.On("IsLinkAccessible", mock.AnythingOfType("string")).Return(true)
+				mockContentDownloader.On("DownloadContent", mock.AnythingOfType("string")).Return(ReadTestContent("go_site_html.html"), nil).Once()
 			},
 		},
 	}

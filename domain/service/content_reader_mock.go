@@ -59,3 +59,8 @@ func (m *MockContentReader) Html() string {
 	args := m.Called()
 	return args.String(0)
 }
+
+func (m *MockContentReader) SourceURL() string {
+	args := m.Called()
+	return args.String(0)
+}

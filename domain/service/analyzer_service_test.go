@@ -118,7 +118,7 @@ func TestAnalyzeContent(t *testing.T) {
 			},
 		},
 		{
-			name: "should run successfully without any analyzers",
+			name: "without any analyzers",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
 				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
@@ -138,7 +138,7 @@ func TestAnalyzeContent(t *testing.T) {
 			},
 		},
 		{
-			name: "should capture errors correctly to download content",
+			name: "capture errors correctly to download content",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
 				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
@@ -150,13 +150,15 @@ func TestAnalyzeContent(t *testing.T) {
 				return dl
 			},
 			prepareItemAnalyzers: func() []*ItemAnalyzeService {
-				m1 := &MockItemAnalyzerService{}
-				m1.On("AnalyzeContent", mock.Anything).Return("Hello World", nil).Once()                         // title
-				m1.On("AnalyzeContent", mock.Anything).Return(nil, fmt.Errorf("error analyzing content")).Once() // error
+				tm := &MockItemAnalyzerService{}
+				tm.On("AnalyzeContent", mock.Anything).Return("Hello World", nil).Once() // title
+
+				em := &MockItemAnalyzerService{}
+				em.On("AnalyzeContent", mock.Anything).Return(nil, fmt.Errorf("error analyzing content")).Once() // error
 
 				return []*ItemAnalyzeService{
-					{Title: "Title", ContentAnalyzer: m1},
-					{Title: "ErrorAnalyzer", ContentAnalyzer: m1},
+					{Title: "Title", ContentAnalyzer: tm},
+					{Title: "ErrorAnalyzer", ContentAnalyzer: em},
 				}
 			},
 			expectedResults: ExpectedResults{
