@@ -125,6 +125,7 @@
             if (xhr.status >= 200 && xhr.status < 300) {
               document.getElementById("resultArea").value = xhr.responseText;
             } else {
+              document.getElementById("resultArea").value = xhr.responseText;
               console.error("Error fetching update:", xhr.statusText);
             }
 
