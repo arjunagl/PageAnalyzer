@@ -51,15 +51,13 @@ The result comes in json format.  Given below are the json fields and a descript
 
 The project employs a simplified version of the **Hexagonal (Ports and Adapters)** architecture. This design choice facilitates a clear separation of concerns by isolating the core logic of the application from external influences and interactions. The core logic can be found in the **domain** folder and the external influences can be found in the **infrastructure** folder of the code.
 
-### Use of Pointers
-
-Pointers are extensively utilized within the codebase. This decision is grounded in the observed performance benefits that pointers offer, particularly in terms of memory efficiency and speed.
-
 ### API Endpoints
 
-The project exposes two main API endpoints, designed to streamline the process of submitting and retrieving analysis requests:
+The project exposes two main API endpoints, designed to streamline the process of submitting and retrieving analysis requests. Given the potentially time-consuming nature of page analysis, especially for content-rich sites, separating the submission process from result retrieval is crucial.  Separating the two endpoints will free up the server to handle more requests coming in giving a better throughput and also avoid potential timeouts for content-rich sites. 
 
-1. **Submit Request Endpoint (POST /analyze)**: This endpoint is responsible for accepting requests to analyze web pages. Users can submit the URL of the page they wish to analyze, and the system will initiate the analysis process. Given the potentially time-consuming nature of page analysis, especially for content-rich sites, separating the submission process from result retrieval is crucial. Upon success this will return a **correlationID** which can be used to check the results/status
+The two endpoints are  
+
+1. **Submit Request Endpoint (POST /analyze)**: This endpoint is responsible for accepting requests to analyze web pages. Users can submit the URL of the page they wish to analyze, and the system will initiate the analysis process. Upon success this will return a **correlationID** which can be used to check the results/status
 
 2. **Get Request Endpoint (GET /analyze)**: This endpoint allows users to retrieve the results of their analysis requests. This separation ensures that users can obtain analysis outcomes without the risk of HTTP connection timeouts, which could occur if page analysis were to take an extended period.
 
@@ -76,6 +74,13 @@ sequenceDiagram
     GET_Analyze->>-Browser: Returns analysis status
 
 ```
+### Use of Pointers
+
+Pointers are extensively utilized within the codebase. This decision is grounded in the observed performance benefits that pointers offer, particularly in terms of memory efficiency and speed.
+
+### Documentation
+
+I personally believe good code does not need additonal documentation as comments.  Code should be self-explanatory.  However in certain cases where I believe documentation is required I have included minor comments.
 
 ## Build and Deployment
 
