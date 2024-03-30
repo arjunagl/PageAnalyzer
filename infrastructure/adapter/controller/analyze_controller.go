@@ -28,7 +28,7 @@ func (h *AnalyzeController) Analyze(w http.ResponseWriter, r *http.Request) {
 
 	// do a quick check to see if the site can be reached
 	if isAcceesible := h.app.ContentDownloader.IsLinkAccessible(analyzeReq.SiteURL); !isAcceesible {
-		http.Error(w, "Site is inaccessible", http.StatusNotFound)
+		http.Error(w, "404 Site is inaccessible", http.StatusNotFound)
 		return
 	}
 
