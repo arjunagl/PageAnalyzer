@@ -59,13 +59,10 @@ func TestSchedulerService(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 
-			// Setup mock expectation
 			mockAnalyzerService.On("AnalyzeContent", tc.source).Return(tc.mockReturn.Result, tc.mockReturn.Err).Once()
 
-			// Test the results
 			_, exists := scheduler.GetResult(tc.id)
 			assert.Equal(t, false, exists)
-
 		})
 	}
 }

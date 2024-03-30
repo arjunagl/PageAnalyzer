@@ -9,7 +9,6 @@ import (
 func TestVersionAnalyzeService_AnalyzeContent(t *testing.T) {
 	tests := []struct {
 		name           string
-		doctypePresent bool // Simulates whether the <!doctype html> is present
 		sourceContent  string
 		expectedResult string
 	}{
