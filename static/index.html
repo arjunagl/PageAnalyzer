@@ -41,7 +41,9 @@
           name="guid"
           placeholder="GUID will appear here"
         />
-        <button type="button" class="btn update-btn">Get Update</button>
+        <button type="button" class="btn update-btn" disabled>
+          Get Update
+        </button>
       </form>
 
       <textarea
@@ -65,6 +67,9 @@
           // Convert the JavaScript object to a JSON string
           var jsonData = JSON.stringify(data);
 
+          // Disable buttons
+          disableButtons();
+
           // Create and send an XMLHttpRequest
           var xhr = new XMLHttpRequest();
           xhr.open("POST", "/analyze", true);
@@ -81,11 +86,17 @@
               document.getElementById("resultArea").value = message;
               console.error("Error:", xhr.statusText);
             }
+
+            // Enable buttons
+            enableButtons();
           };
 
           xhr.onerror = function () {
             // Handle network errors
             console.error("Network Error");
+
+            // Enable buttons
+            enableButtons();
           };
 
           xhr.send(jsonData); // Send the JSON data
@@ -100,6 +111,9 @@
             return;
           }
 
+          // Disable buttons
+          disableButtons();
+
           var xhr = new XMLHttpRequest();
           xhr.open(
             "GET",
@@ -113,14 +127,30 @@
             } else {
               console.error("Error fetching update:", xhr.statusText);
             }
+
+            // Enable buttons
+            enableButtons();
           };
 
           xhr.onerror = function () {
             console.error("Network Error on update fetch");
+
+            // Enable buttons
+            enableButtons();
           };
 
           xhr.send();
         });
+
+      function disableButtons() {
+        document.querySelector(".submit-btn").disabled = true;
+        document.querySelector(".update-btn").disabled = true;
+      }
+
+      function enableButtons() {
+        document.querySelector(".submit-btn").disabled = false;
+        document.querySelector(".update-btn").disabled = false;
+      }
     </script>
   </body>
 </html>
