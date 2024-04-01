@@ -175,7 +175,8 @@ func TestAnalyzeGetResults(t *testing.T) {
 			if tt.expectedCode == http.StatusOK {
 				var actualResult model.AnalysisResultWithStatus
 				responseBody := rr.Body.String()
-				json.Unmarshal([]byte(responseBody), &actualResult)
+				//lint:ignore SA1012 Ignore the error return value of json.Unmarshal
+				_ = json.Unmarshal([]byte(responseBody), &actualResult)
 				assert.Equal(t, tt.expectedResult, &actualResult)
 			}
 		})
