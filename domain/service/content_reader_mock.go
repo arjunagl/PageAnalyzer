@@ -10,9 +10,13 @@ type MockContentReader struct {
 	mock.Mock
 }
 
-func (m *MockContentReader) LoadContentFromSource(source string) error {
+func (m *MockContentReader) LoadContentFromSource(source, content string) (port.ContentReader, error) {
 	args := m.Called(source)
-	return args.Error(0)
+	var err error
+	if args.Get(1) != nil {
+		err = args.Error(1)
+	}
+	return args.Get(0).(port.ContentReader), err
 }
 
 func (m *MockContentReader) Find(selector string) port.ContentReader {

@@ -1,7 +1,7 @@
 package port
 
 type ContentReader interface {
-	LoadContentFromSource(string) error
+	LoadContentFromSource(string, string) (ContentReader, error)
 
 	Find(selector string) ContentReader
 

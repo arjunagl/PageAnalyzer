@@ -18,15 +18,18 @@ func NewGoqueryAdapter() port.ContentReader {
 	return &GoqueryAdapter{}
 }
 
-func (g *GoqueryAdapter) LoadContentFromSource(source string) error {
-	g.sourceURL = source
-	g.sourceContent = source
-	doc, err := goquery.NewDocumentFromReader(strings.NewReader(source))
+func (g *GoqueryAdapter) LoadContentFromSource(source, content string) (port.ContentReader, error) {
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(content))
 	if err != nil {
-		return fmt.Errorf("error converting to document: %w", err)
+		return nil, fmt.Errorf("error converting to document: %w", err)
 	}
 	g.selection = doc.Selection
-	return nil
+
+	return &GoqueryAdapter{
+		selection:     doc.Selection,
+		sourceURL:     source,
+		sourceContent: content,
+	}, nil
 }
 
 func (g *GoqueryAdapter) Find(selector string) port.ContentReader {

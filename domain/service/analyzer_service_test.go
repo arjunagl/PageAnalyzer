@@ -27,7 +27,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "successful analysis",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(cr, nil)
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -96,7 +96,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "failure to download content",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(cr, nil)
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -121,7 +121,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "without any analyzers",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(cr, nil)
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
@@ -141,7 +141,7 @@ func TestAnalyzeContent(t *testing.T) {
 			name: "capture errors correctly to download content",
 			prepareReader: func() port.ContentReader {
 				cr := &MockContentReader{}
-				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(nil)
+				cr.On("LoadContentFromSource", mock.AnythingOfType("string")).Return(cr, nil)
 				return cr
 			},
 			prepareDownloader: func() port.ContentDownloader {
