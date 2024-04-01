@@ -116,6 +116,8 @@ type MemoryStore interface{
 
    This will avoid wastage of server resources.
 
+5. Certain sites return access-denied or inaccessible when trying to probe programatically.  This is a known issue and an alternative should be found.
+
 ## Unit and Integration Tests
 
 Unit and integration tests are included in the source code. Running `make test` will run the unit and integration tests. Integration tests are included for `AnalyzeController.go` only. You can find the test data and setup information for these integration tests [here](./infrastructure/adapter/controller/test/). Due to time constraints I have focused mostly on the unit-tests for the domain code.
